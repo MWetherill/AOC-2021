@@ -3,7 +3,7 @@
 const fs = require('fs')
 
 try {
-  var input = fs.readFileSync('4-test.txt', 'utf8')
+  var input = fs.readFileSync('4-input.txt', 'utf8')
 } catch (err) {
   console.error(err)
 }
@@ -12,6 +12,8 @@ try {
 
 var card;
 
+// final number called
+var finalCalledNo;
 
 
 ////////////
@@ -77,19 +79,21 @@ function newFunc(input) {
           // return the card if a row is complete
           if( allEqual(arr[j][k]) ) {
             card = arr[j]
+            finalCalledNo = bingoNos[i];
             return card
           }
 
           // return the card if a column is complete
           if (
-              arr[j][k][l] === "x" &&
-              arr[j][k + 1][l] === "x" &&
-              arr[j][k + 2][l] === "x" &&
-              arr[j][k + 3][l] === "x" &&
-              arr[j][k + 4][l] === "x"
+              arr[j][0][l] === "x" &&
+              arr[j][1][l] === "x" &&
+              arr[j][2][l] === "x" &&
+              arr[j][3][l] === "x" &&
+              arr[j][4][l] === "x"
 
             ) {
               card = arr[j]
+              finalCalledNo = bingoNos[i];
               return card
             }
         } //numbers
@@ -104,7 +108,18 @@ function newFunc(input) {
 
 }
 
-////////////
+newFunc(input)
 
+var cardTotal = 0;
 
-console.log(newFunc(input))
+for (var i = 0; i < card.length; i++) {
+  for (var j = 0; j < card[i].length; j++) {
+    if (card[i][j] !== "x") {
+      cardTotal += card[i][j]
+    }
+  }
+}
+
+var finalTotal = cardTotal * finalCalledNo;
+
+console.log(finalTotal)
